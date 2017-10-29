@@ -1,20 +1,20 @@
 <xml >
 <hangman>
 <clue>
-<question >very small bird</question>
-<answer>RAT</answer>
+  <question >Bird</question>
+  <answer>SPARROW</answer>
 </clue>
 <clue>
-<question >small ANIMAL</question>
-<answer>RAT</answer>
+  <question >Animal</question>
+  <answer>RAT</answer>
 </clue>
 <clue>
-<question >BIG ANIMAL</question>
-<answer>HIPPOPOTAMUS</answer>
+  <question >Country</question>
+  <answer>RUSSIA</answer>
 </clue>
 <clue>
-<question >Dumb ANIMAL</question>
-<answer>DONKEY</answer>
+  <question >City</question>
+  <answer>CHICAGO</answer>
 </clue>
 </hangman>
 </xml>
