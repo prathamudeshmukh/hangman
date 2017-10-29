@@ -1,0 +1,20 @@
+<xml >
+<hangman>
+<clue>
+<question >very small bird</question>
+<answer>RAT</answer>
+</clue>
+<clue>
+<question >small ANIMAL</question>
+<answer>RAT</answer>
+</clue>
+<clue>
+<question >BIG ANIMAL</question>
+<answer>HIPPOPOTAMUS</answer>
+</clue>
+<clue>
+<question >Dumb ANIMAL</question>
+<answer>DONKEY</answer>
+</clue>
+</hangman>
+</xml>

@@ -1,0 +1,88 @@
+<html>
+<head>
+<script>
+var xmldoc;
+var totalrows=10;
+function loadxml(){
+	if(window.XMLHttpRequest){
+		xmldoc=new window.XMLHttpRequest();
+		xmldoc.open('GET','hangmandata.xml',false);
+		xmldoc.send("");
+		return xmldoc.responseXML;
+	}
+		
+	
+}
+
+
+function updateform(){
+
+
+alert(window.openDatabase);
+
+/*
+	for(var i=0;i<totalrows;i++){
+		var question=document.getElementById('question'+i).value;
+		var answer=document.getElementById('answer'+i).value;
+		
+	}*/
+}
+
+function loadform(){
+
+xmldoc=loadxml();
+var k= xmldoc.getElementsByTagName("clue");
+var inputform=document.getElementById('inputform');
+var element;
+var table=document.createElement('table');
+table.align='center';
+table.width='25%';
+	for(var i=0;i<totalrows;i++){
+		var tr=document.createElement('tr');
+		var td=document.createElement('td');
+		element=document.createElement('input');
+		element.type='text';
+		element.id='question'+i;
+		if(typeof xmldoc.getElementsByTagName("question")[i]!='undefined'){
+			element.value=xmldoc.getElementsByTagName("question")[i].childNodes[0].nodeValue;
+		}
+		element.className='inputword';
+		td.appendChild(element);
+		tr.appendChild(td);
+		
+		td=document.createElement('td');
+		element=document.createElement('input');
+		element.type='text';
+		element.id='answer'+i;
+		if(typeof xmldoc.getElementsByTagName("question")[i]!='undefined'){
+			element.value=xmldoc.getElementsByTagName("answer")[i].childNodes[0].nodeValue;
+		}
+		element.className='inputword';
+		td.appendChild(element);
+		tr.appendChild(td);
+		table.appendChild(tr);
+	}
+inputform.appendChild(table);
+}
+</script>
+<style type='text/css'>
+
+.inputword{
+	width:200;
+	border:3px black groove;
+	background-color:maroon;
+	text-align:left;
+	color:yellow;
+	
+	
+}
+</style>
+</head>
+<body onload='loadform()'>
+<h1 align='center'>Configure Hangman</h1>
+<div id='inputform'>
+
+</div>
+<p align='center'><input type='button' value='Update' onclick='updateform();'></p>
+</body>
+</html>

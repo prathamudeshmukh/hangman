@@ -1,0 +1,199 @@
+<html>
+<head>
+<script>
+var imagename='hangman'
+var cluearray=new Array();
+var answersarray=new Array();
+
+var currentclue=0;
+var totwrongletters=0;
+var allowedwrongletters=7;
+var totcorrectletters=0,totquestions=0;
+var xmldoc;
+	function loadxml(){
+		if(window.XMLHttpRequest){
+			xmldoc=new window.XMLHttpRequest();
+			xmldoc.open('GET','hangmandata.xml',false);
+			xmldoc.send("");
+			return xmldoc.responseXML;
+		}
+			
+		
+	}
+
+	function initVars(){
+		xmldoc=loadxml();
+		var k= xmldoc.getElementsByTagName("clue");
+		for(var i=0;i<k.length;i++){
+			cluearray[i]=xmldoc.getElementsByTagName("question")[i].childNodes[0].nodeValue;
+			answersarray[i]=xmldoc.getElementsByTagName("answer")[i].childNodes[0].nodeValue;
+		}
+		totquestions=k.length-1;
+	}
+	function startgame(){
+		document.getElementById('manimage').src=imagename+totwrongletters+'.jpg';
+		//document.getElementById('startbutton').disabled=true;
+		document.getElementById('keypad').style.display='block';
+		generatetextbox();
+	}
+	function alphapress(obj){
+		//alert('called');
+		var correctletter=false;
+		obj.className='disabledkeymap';
+		obj.removeAttribute('onclick');
+		var letter=obj.innerHTML;
+		var k=answersarray[currentclue].length;
+
+		for(var i=0;i<k;i++){
+			if(letter==answersarray[currentclue][i]){
+				document.getElementById('letter'+i).value=letter;
+				correctletter=true;
+				totcorrectletters++;
+			}
+			
+			
+		}
+
+		if(!correctletter) {
+			totwrongletters++;
+			document.getElementById('manimage').src=imagename+totwrongletters+'.jpg';
+			if(totwrongletters==allowedwrongletters){
+				document.getElementById('keypad').innerHTML='<b>GAME OVER!!!</b>';
+			}
+			
+		}else{
+			//alert(totcorrectletters+'  '+k)
+			if(totcorrectletters==k){
+				totcorrectletters=0;
+				if(currentclue!=totquestions){
+					currentclue++;
+					generatetextbox();
+				}else{
+					document.getElementById('keypad').innerHTML='<b>You Win <br> GAME OVER!!!</b>';
+				}
+			}
+			
+		}
+	}
+
+	function generatetextbox(){
+		var inputarea=document.getElementById('inputarea');
+		document.getElementById('cluearea').innerHTML='<b>CLUE:'+cluearray[currentclue]+'</b>';
+		var disabledkeys=elementsByClassName('disabledkeymap');
+		var j=disabledkeys.length;
+		for(var a=0;a<j;a++){
+			if(typeof disabledkeys[a]!='undefined'){
+				disabledkeys[a].className='keymap';
+				disabledkeys[a].onclick=function(){alphapress(this)};
+			}
+		}
+
+		inputarea.innerHTML='';
+		var k=answersarray[currentclue].length;
+		for(var i=0;i<k;i++){
+			var element=document.createElement('input');
+			element.type='text';
+			element.id='letter'+i;
+			element.readOnly=true;
+			element.className='inputword';
+			inputarea.appendChild(element);
+		}
+	}
+
+function elementsByClassName(classname){
+var elements=document.getElementsByTagName('td');
+var k=0;
+var retelements=new Array();
+	for(var i=0;i<elements.length;i++){
+		if(elements[i].className==classname){
+			retelements[k]=elements[i];
+			k++;
+		}
+	}
+return retelements;
+}
+
+</script>
+<style type='text/css'>
+
+.keymap{
+	color:brown;
+background-color:black
+}
+
+
+.disabledkeymap{
+	color:black;background-color:gray
+	
+}
+
+.inputword{
+	width:40;
+	border:3px black groove;
+	background-color:maroon;
+	text-align:center;
+	color:yellow;
+	
+}
+
+
+td:hover{cursor:pointer}
+</style>
+</head>
+<body onload='initVars();'>
+<div align='center' >
+	<img src='blank.jpg' id='manimage' width='290px' height='280px' style='border:4px brown groove ' >
+</div>
+<div align='center' id='cluearea'>
+<input type='button' value='Start' id='startbutton' name='startbutton' onclick='startgame()'>
+</div>
+<div align='center' id='inputarea'>
+
+</div>
+<div align='center' id='keypad' style='display:none'>
+<table style='border:1px black ridge ' width='25%' >
+<tr>
+<td class='keymap' align='center' onclick='alphapress(this)'>A</td>
+<td class='keymap' align='center' onclick='alphapress(this)'>B</td>
+<td class='keymap' align='center' onclick='alphapress(this)'>C</td>
+<td class='keymap' align='center' onclick='alphapress(this)'>D</td>
+<td class='keymap' align='center' onclick='alphapress(this)'>E</td>
+<td class='keymap' align='center' onclick='alphapress(this)'>F</td>
+<td class='keymap' align='center' onclick='alphapress(this)'>G</td>
+<td class='keymap' align='center' onclick='alphapress(this)'>H</td>
+</tr>
+
+<tr>
+<td class='keymap' align='center' onclick='alphapress(this)'>I</td>
+<td class='keymap' align='center' onclick='alphapress(this)'>J</td>
+<td class='keymap' align='center' onclick='alphapress(this)'>K</td>
+<td class='keymap' align='center' onclick='alphapress(this)'>L</td>
+<td class='keymap' align='center' onclick='alphapress(this)'>M</td>
+<td class='keymap' align='center' onclick='alphapress(this)'>N</td>
+<td class='keymap' align='center' onclick='alphapress(this)'>O</td>
+<td class='keymap' align='center' onclick='alphapress(this)'>P</td>
+</tr>
+
+<tr>
+<td class='keymap' align='center' onclick='alphapress(this)'>Q</td>
+<td class='keymap' align='center' onclick='alphapress(this)'>R</td>
+<td class='keymap' align='center' onclick='alphapress(this)'>S</td>
+<td class='keymap' align='center' onclick='alphapress(this)'>T</td>
+<td class='keymap' align='center' onclick='alphapress(this)'>U</td>
+<td class='keymap' align='center' onclick='alphapress(this)'>V</td>
+<td class='keymap' align='center' onclick='alphapress(this)'>W</td>
+<td class='keymap' align='center' onclick='alphapress(this)'>X</td>
+</tr>
+
+<tr>
+<td class='keymap' COLSPAN='3'></td>
+<td class='keymap' align='center' onclick='alphapress(this)'>Y</td>
+<td class='keymap' align='center' onclick='alphapress(this)'>Z</td>
+<td class='keymap' COLSPAN='3'></td>
+</tr>
+
+
+</table>
+</div>
+</body>
+</html>

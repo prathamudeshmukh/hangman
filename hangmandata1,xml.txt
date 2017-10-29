@@ -1,0 +1,7 @@
+<xml >
+<hangman>
+<question clue="BIG ANIMAL" answer="HIPPOPOTAMUS"/>
+<question clue="SMALL ANIMAL" answer="PUSSYCAT"/>
+<question clue="DUMB ANIMAL" answer="DONKEY"/>
+</hangman>
+</xml>
